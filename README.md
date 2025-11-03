@@ -129,15 +129,6 @@ Prunes the exponential state space by keeping only the top-N most probable state
 
 Post-processing step that checks if plaintexts were swapped and corrects the assignment.
 
-## Project Structure
-```
-two-time-pad-cracker/
-├── two_time_pad.py       # Main implementation
-├── presentation.tex       # LaTeX Beamer presentation
-├── README.md             # This file
-└── examples/             # Example XOR streams and outputs
-```
-
 ## Algorithm Complexity
 
 - **Training**: `O(|corpus| × n)` where n=7
@@ -199,5 +190,6 @@ Feel free to open issues or submit pull requests for:
 [Faculty of Computer Science, MSI]
 
 ---
+
 
 **Note**: This implementation is for educational and research purposes only. Do not use for malicious purposes.
