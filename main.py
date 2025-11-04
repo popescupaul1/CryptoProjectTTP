@@ -229,9 +229,17 @@ class TwoTimePadCracker:
 
 
 def create_training_corpus():
-    """Create training corpora for the two plaintext types"""
-    # Business/formal corpus
+    """
+    Create larger, more diverse training corpora.
+    Increased variety helps the language models generalize better.
+    """
+    
+    # =========================================================================
+    # BUSINESS/FORMAL CORPUS - Expanded with more diversity
+    # =========================================================================
+    
     business_sentences = [
+        # Professional emails
         "Hello, I hope this message finds you well.",
         "I am writing to follow up on our previous discussion regarding the project.",
         "Thank you very much for your help with this matter.",
@@ -247,10 +255,56 @@ def create_training_corpus():
         "The project timeline needs to be reviewed and updated.",
         "Please confirm your attendance at the meeting tomorrow.",
         "Let me know if you have any questions or concerns about this.",
+        
+        # Business reports and documentation
+        "The quarterly results show a significant increase in revenue.",
+        "Our customer satisfaction scores have improved by fifteen percent.",
+        "The board of directors approved the proposed budget for next year.",
+        "We are pleased to announce the launch of our new product line.",
+        "According to the latest market research, consumer demand is rising.",
+        "The implementation phase will begin in the first quarter.",
+        "All stakeholders have been notified of the changes to the schedule.",
+        "Please find attached the financial statements for your review.",
+        "The company has achieved record sales this fiscal year.",
+        "We must comply with all relevant regulations and standards.",
+        
+        # Meeting and scheduling
+        "The conference call will take place on Tuesday at ten in the morning.",
+        "Please reserve the boardroom for Wednesday afternoon.",
+        "I would like to schedule a meeting to discuss the proposal.",
+        "Could we reschedule our appointment to later this week?",
+        "The presentation is scheduled for Friday at two o'clock.",
+        "All participants should arrive fifteen minutes early.",
+        "We will need to extend the meeting by thirty minutes.",
+        "Please send the agenda before the end of the day.",
+        
+        # Professional correspondence
+        "Dear Sir or Madam, I am writing to inquire about your services.",
+        "We would be delighted to have the opportunity to work with you.",
+        "Please do not hesitate to contact us if you require further information.",
+        "We look forward to a long and mutually beneficial partnership.",
+        "Your prompt attention to this matter would be greatly appreciated.",
+        "Enclosed please find the documents you requested last week.",
+        "We regret to inform you that the order has been delayed.",
+        "Thank you for bringing this issue to our attention immediately.",
+        
+        # Technical and formal
+        "The system has been configured according to specifications.",
+        "All tests have been completed successfully without any errors.",
+        "The software update will be deployed during the maintenance window.",
+        "Please ensure that all backups are created before proceeding.",
+        "The security audit revealed several areas requiring improvement.",
+        "We recommend implementing the changes as soon as possible.",
+        "The technical documentation has been updated to reflect recent changes.",
+        "User access permissions must be reviewed on a quarterly basis.",
     ]
     
-    # Secret/casual corpus
+    # =========================================================================
+    # SECRET/CASUAL CORPUS - Expanded with more diversity
+    # =========================================================================
+    
     secret_sentences = [
+        # Spy/secret communication style
         "Secret text that should be decoded carefully and completely.",
         "The password is hidden somewhere in the message text.",
         "I will call you very soon to discuss all the details.",
@@ -266,31 +320,166 @@ def create_training_corpus():
         "Remember to follow the protocol exactly as planned.",
         "Stay safe and keep a low profile until we reconnect.",
         "Destroy this message after reading it completely.",
+        
+        # Casual conversational
+        "Hey, what are you doing later tonight? Want to hang out?",
+        "I can't believe how crazy that movie was last weekend!",
+        "Did you see the game yesterday? It was absolutely insane!",
+        "Let me know when you get here and I'll come meet you.",
+        "That restaurant was amazing, we should definitely go back soon.",
+        "I'm running a bit late but I'll be there in twenty minutes.",
+        "Sorry I missed your call earlier, my phone was on silent.",
+        "Thanks for helping me out with that, I really appreciate it.",
+        "I'll pick you up around seven and we can head over together.",
+        "Can you grab some pizza on your way home from work?",
+        
+        # Informal planning
+        "We should probably leave early to avoid all the traffic.",
+        "Don't forget to bring your jacket, it's supposed to rain.",
+        "I need to stop by the store quickly before we go.",
+        "Let's meet at the coffee shop on Main Street instead.",
+        "I heard they're having a big sale this weekend downtown.",
+        "Did you remember to get tickets for the concert next month?",
+        "My car is in the shop so I'll need a ride tomorrow.",
+        "Can you believe it's already been three years since then?",
+        
+        # Mysterious/cryptic
+        "The eagle has landed and the package is secure.",
+        "Proceed with caution and trust no one you haven't verified.",
+        "The drop point has been compromised, use the backup location.",
+        "Wait for my signal before you make any moves tonight.",
+        "The target will be at the rendezvous point at midnight.",
+        "Keep your phone on silent and avoid using public networks.",
+        "The documents are hidden in the usual spot behind the building.",
+        "If anything goes wrong, abort immediately and return to base.",
+        "They're watching the main entrance so use the side door.",
+        "The key is taped under the third bench in the park.",
+        
+        # Personal/diary style
+        "Today was such a long day at work, I'm completely exhausted.",
+        "I can't stop thinking about what happened last summer.",
+        "Sometimes I wonder if I made the right decision back then.",
+        "Tomorrow I'm finally going to start that project I've been planning.",
+        "I need to remember to call my parents this weekend.",
+        "Life has been pretty crazy lately but in a good way.",
+        "I'm so excited about the trip we're planning for next year.",
+        "It's been way too long since we all got together like this.",
+        
+        # Short urgent messages
+        "Need to talk ASAP about the situation from yesterday.",
+        "Change of plans, meet at the other location instead.",
+        "Running behind schedule, start without me if necessary.",
+        "Got your message, will respond with details very soon.",
+        "Emergency meeting tonight, everyone needs to be there.",
+        "The plan worked perfectly, everything went smoothly.",
+        "New information just came in that changes everything.",
+        "All clear, proceed as discussed in our last conversation.",
     ]
     
-    # Create varied corpus
+    # =========================================================================
+    # DATA AUGMENTATION - Create variations
+    # =========================================================================
+    
     corpus1_parts = []
     corpus2_parts = []
     
-    for _ in range(50):  # Repeat for more training data
+    # For business corpus - generate 40 variations of each sentence
+    for _ in range(40):
         for sent in business_sentences:
+            # Original sentence
             corpus1_parts.append(sent)
+            
+            # Lowercase version
             corpus1_parts.append(sent.lower())
+            
+            # With extra spacing
+            corpus1_parts.append(sent + "  ")
+            
+            # With single space
             corpus1_parts.append(sent + " ")
+            
+            # Remove punctuation from end
+            if sent[-1] in '.!?':
+                corpus1_parts.append(sent[:-1])
+            
+            # Add variations with different punctuation
+            if sent[-1] == '.':
+                corpus1_parts.append(sent[:-1] + "!")
+                corpus1_parts.append(sent[:-1] + "?")
+            
+            # Word reorderings and substrings for variety
             words = sent.split()
-            if len(words) > 3:
+            if len(words) > 5:
+                # Take different segments
                 corpus1_parts.append(" ".join(words[1:]))
                 corpus1_parts.append(" ".join(words[:-1]))
+                corpus1_parts.append(" ".join(words[2:-1]))
+                corpus1_parts.append(" ".join(words[1:-2]))
+                # Reverse some words for diversity
+                corpus1_parts.append(" ".join(words[:3] + words[3:][::-1]))
     
-    for _ in range(50):
+    # For secret/casual corpus - generate 40 variations of each sentence
+    for _ in range(40):
         for sent in secret_sentences:
+            # Original
             corpus2_parts.append(sent)
+            
+            # Lowercase
             corpus2_parts.append(sent.lower())
+            
+            # With spacing
+            corpus2_parts.append(sent + "  ")
             corpus2_parts.append(sent + " ")
+            
+            # Remove punctuation
+            if sent[-1] in '.!?':
+                corpus2_parts.append(sent[:-1])
+            
+            # Different punctuation
+            if sent[-1] == '.':
+                corpus2_parts.append(sent[:-1] + "!")
+                corpus2_parts.append(sent[:-1] + "?")
+            
+            # Word variations
             words = sent.split()
-            if len(words) > 3:
+            if len(words) > 5:
                 corpus2_parts.append(" ".join(words[1:]))
                 corpus2_parts.append(" ".join(words[:-1]))
+                corpus2_parts.append(" ".join(words[2:-1]))
+                corpus2_parts.append(" ".join(words[1:-2]))
+                corpus2_parts.append(" ".join(words[:3] + words[3:][::-1]))
+            
+            # Add with different cases for more variety
+            if len(words) > 2:
+                corpus2_parts.append(words[0].upper() + " " + " ".join(words[1:]).lower())
+    
+    # =========================================================================
+    # Add common English phrases and patterns
+    # =========================================================================
+    
+    common_phrases = [
+        "the quick brown fox jumps over the lazy dog",
+        "all work and no play makes Jack a dull boy",
+        "to be or not to be that is the question",
+        "it was the best of times it was the worst of times",
+        "call me Ishmael",
+        "in the beginning was the word",
+        "it is a truth universally acknowledged",
+        "happy families are all alike",
+        "it was a bright cold day in April",
+        "the past is a foreign country",
+    ]
+    
+    for _ in range(50):
+        for phrase in common_phrases:
+            corpus1_parts.append(phrase)
+            corpus2_parts.append(phrase)
+            corpus1_parts.append(phrase.capitalize())
+            corpus2_parts.append(phrase.capitalize())
+    
+    # =========================================================================
+    # Combine everything
+    # =========================================================================
     
     corpus1 = " ".join(corpus1_parts)
     corpus2 = " ".join(corpus2_parts)
